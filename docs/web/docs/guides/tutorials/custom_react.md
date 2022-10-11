@@ -347,7 +347,7 @@ In any case, for future runs you could have formatting that explicitly extracts 
 ```python
 ...
 outputs = contents["outputs"]['final_data']
-did_edit_text = outputs['editedText'] == inputs['text']
+did_edit_text = outputs['editedText'] != inputs['text']
 edit_text_string = f"Corrected Text: {outputs['editedText']}\n" if did_edit_text else ""
 output_string = f"Provided rating: {outputs['rating']}\n{edit_text_string}"
 ...
