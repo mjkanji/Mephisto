@@ -286,7 +286,7 @@ def format_data_for_printing(data):
     # Custom tasks can define methods for how to display their data in a relevant way
     worker_name = Worker.get(db, data["worker_id"]).worker_name
     contents = data["data"]
-    duration = contents["times"]["task_end"] - contents["times"]["task_start"]
+    duration = data["task_end"] - data["task_start"]
     metadata_string = (
         f"Worker: {worker_name}\nUnit: {data['unit_id']}\n"
         f"Duration: {int(duration)}\nStatus: {data['status']}\n"
@@ -294,7 +294,7 @@ def format_data_for_printing(data):
 
     inputs = contents["inputs"]
     inputs_string = f"Provided input: {inputs}\n"
-    outputs = contents["outputs"]['final_data']
+    outputs = contents["outputs"]
     output_string = f"Provided output: {outputs}\n"
     return f"-------------------\n{metadata_string}{inputs_string}{output_string}"
 
@@ -346,7 +346,7 @@ Generally, you should change the `task_name` between runs such that your data fo
 In any case, for future runs you could have formatting that explicitly extracts the portions you're interested in, or does additional logic to make your review easier. For instance, you could make it so that the corrected text is only shown if the worker made an edit:
 ```python
 ...
-outputs = contents["outputs"]['final_data']
+outputs = contents["outputs"]
 did_edit_text = outputs['editedText'] != inputs['text']
 edit_text_string = f"Corrected Text: {outputs['editedText']}\n" if did_edit_text else ""
 output_string = f"Provided rating: {outputs['rating']}\n{edit_text_string}"
